@@ -120,12 +120,12 @@ public class UserServiceTests
 
     [TestMethod]
 
-    public void RegisterUser_ShouldReturnConfirmationMessage()
+    public void RegisterUser_ShouldReturnConfirmationMessage() // Test to see if the user is registered successfully
     {
         // Arrange
-        var userRepository = new UserRepository();
-        var userService = new UserService(userRepository);
-        var user = new User
+        var userRepository = new UserRepository(); // Create a new instance of the UserRepository
+        var userService = new UserService(userRepository); // Create a new instance of the UserService
+        var user = new User // Create a new instance of the User
         {
             Name = "UserValid2",
             Email = "Exemple@mail.com",
@@ -133,18 +133,18 @@ public class UserServiceTests
         };
 
         // Act
-        var response = userService.RegisterUser(user);
+        var response = userService.RegisterUser(user); // Register the user
 
         // Assert
-        Assert.AreEqual("UserValid2", response.Name);
-        Assert.AreEqual("User registered successfully.", response.Message);
+        Assert.AreEqual("UserValid2", response.Name); // Check is the name is the same
+        Assert.AreEqual("User registered successfully.", response.Message); // Checks if user is registered successfully
     }
 
     [TestMethod]
-    public void RegisterUser_ShouldBeStoredInRepository()
+    public void RegisterUser_ShouldBeStoredInRepository() // Test to see if the user is stored in the repository
     {
         // Arrange
-        var userRepository = new UserRepository();
+        var userRepository = new UserRepository(); 
         var userService = new UserService(userRepository);
         var user = new User
         {
@@ -154,13 +154,13 @@ public class UserServiceTests
         };
 
         // Act
-        userService.RegisterUser(user);
-        var users = userService.GetAllUsers();
+        userService.RegisterUser(user); // Register the user
+        var users = userService.GetAllUsers(); // Get all users
 
         // Assert
-        Assert.AreEqual(1, users.Count);
-        Assert.AreEqual("NewUser123", users[0].Name);
-        Assert.AreEqual("Mail@example.com", users[0].Email);
+        Assert.AreEqual(1, users.Count); // Check if there is only one user
+        Assert.AreEqual("NewUser123", users[0].Name); // Check if the name is the same
+        Assert.AreEqual("Mail@example.com", users[0].Email); // Check if the email is the same
     }
 }
    
