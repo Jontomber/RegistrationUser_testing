@@ -22,11 +22,11 @@ public class UserServiceTests
     }
 
     [TestMethod]
-    public void ValidateName_ShouldReturnFalse_ForEmptyName_HappyPath() // Test to see if the username is empty
+    public void ValidateName_ShouldReturnFalse_IfSpecialCharachter_NegativePath() // Test to see that special characters can't be used
     {
         // Arrange
-        var service = new UserService(new UserRepository()); 
-        string validName = ""; // no characters
+        var service = new UserService(new UserRepository()); // create a new instance of the UserService
+        string validName = "ValidUser1@"; // 11 characters
 
         // Act
         var isValid = service.IsValidUsername(validName); // Needs to put in aplha numeric characters with 5-20 characters
@@ -36,14 +36,28 @@ public class UserServiceTests
     }
 
     [TestMethod]
-    public void ValidateName_ShouldReturnFalse_ForTooManyCharachters_HappyPath() // Test to see if the username is too many charachters
+    public void ValidateName_ShouldReturnFalse_ForEmptyName_NegativePath() // Test to see if the username is empty or too short
+    {
+        // Arrange
+        var service = new UserService(new UserRepository()); 
+        string validName = ""; // No characters
+
+        // Act
+        var isValid = service.IsValidUsername(validName); // Needs to put in aplha numeric characters with 5-20 characters
+
+        // Assert
+        Assert.IsFalse(isValid, "Valid username was rejected.");
+    }
+
+    [TestMethod]
+    public void ValidateName_ShouldReturnFalse_ForToManyCharachters_NegativePath() // Test to see if the username is too many charachters
     {
         // Arrange
         var service = new UserService(new UserRepository());
         string validName = "NotValidUserTooManyCharachters"; // 25 characters
 
         // Act
-        var isValid = service.IsValidUsername(validName);
+        var isValid = service.IsValidUsername(validName); // Needs to put in aplha numeric characters with 5-20 characters
 
         // Assert
         Assert.IsFalse(isValid, "Valid username was rejected.");
@@ -64,7 +78,21 @@ public class UserServiceTests
     }
 
     [TestMethod]
-    public void ValidateEmail_ShouldReturnFalse_ForEmptyMail_HappyPath() // Test to see if the email is empty
+    public void ValidateEmail_ShouldReturnFalse_ForValidEmail_NegativePath() // Test to see if the email is valid format
+    {
+        // Arrange
+        var service = new UserService(new UserRepository());
+        string validEmail = "Ost@.com"; // Incorrecct email format
+
+        // Act
+        var isValid = service.IsValidEmail(validEmail);
+
+        // Assert
+        Assert.IsFalse(isValid, "Valid email was rejected.");
+    }
+
+    [TestMethod]
+    public void ValidateEmail_ShouldReturnFalse_ForEmptyMail_NegativePath() // Test to see if the email is empty
     {
         // Arrange
         var service = new UserService(new UserRepository());
@@ -90,8 +118,23 @@ public class UserServiceTests
         // Assert
         Assert.IsTrue(isValid, "Valid email was rejected.");
     }
+
     [TestMethod]
-    public void ValidatePassword_ShouldReturnFalse_ForEmptyPassword_HappyPath() // Test to see if the password is empty
+    public void ValidatePassword_ShouldReturnFalse_ForNotHavingSpecialCharachter_NegativePath() // Test to see if the password has a special charachter
+    {
+        // Arrange
+        var service = new UserService(new UserRepository());
+        string validPassword = "Secure1"; // Incorrect password format
+
+        // Act
+        var isValid = service.IsValidPassword(validPassword);
+
+        // Assert
+        Assert.IsFalse(isValid, "Valid email was rejected.");
+    }
+
+    [TestMethod]
+    public void ValidatePassword_ShouldReturnFalse_ForEmptyPassword_NegativePath() // Test to see if the password is empty
     {
         // Arrange
         var service = new UserService(new UserRepository());
@@ -105,7 +148,7 @@ public class UserServiceTests
     }
 
     [TestMethod]
-    public void ValidateUsername_ShouldReturnFalse_ForDuplicateUsername_HappyPath() // Test to see if the username is already taken
+    public void ValidateUsername_ShouldReturnFalse_ForDuplicateUsername_NegativePath() // Test to see if the username is already taken
     {
         // Arrange
         var service = new UserService(new UserRepository());
