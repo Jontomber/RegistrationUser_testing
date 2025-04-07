@@ -9,7 +9,6 @@ updates:
     directory: "/ExempleApp" # Location of package manifests
     schedule:
       interval: "weekly"
-updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/ExempleApp.Tests" # Location of package manifests
     schedule:
